@@ -1,0 +1,16 @@
+version: "2"
+services:
+  frontend:
+    image: backend:latest
+    container_name: backend
+    build: .
+
+    ports:
+      - 8000:8000
+
+    networks:
+      - cts-dashboard
+
+networks:
+  cts-dashboard:
+    external: true
