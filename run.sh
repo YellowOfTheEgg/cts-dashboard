@@ -1,5 +1,8 @@
 #!/bin/bash
 echo "CTS-Dashboard 1.0"
+
+docker network create cts-dashboard
+
 echo "Installing and starting backend server..."
 cd backend
 docker compose up -d

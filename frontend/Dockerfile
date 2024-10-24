@@ -1,12 +1,13 @@
-FROM node:23.0.0 as build
+FROM node:20.18.0 as build
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-COPY package*.json ./
-RUN npm ci
-
 COPY . .
+#COPY package*.json ./
+
+RUN npm ci --verbose
+
 
 RUN npm run build
 
