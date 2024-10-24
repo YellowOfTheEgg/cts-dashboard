@@ -40,43 +40,33 @@ Tatusch, M., Klassen, G., Bravidor, M., and Conrad, S.
 In: _Machine Learning and Data Mining in Pattern Recognition, 16th International Conference on Machine Learning and
 Data Mining, MLDM 2020_, pages 155–170.
 
-<a id="2">[[2]](https://link.springer.com/chapter/10.1007%2F978-3-030-50146-4_50)</a>
-Klassen, G., Tatusch, M., Himmelspach, L., and Conrad, S.
-**Fuzzy Clustering Stability Evaluation of Time Series**.  
-In: _Information Processing and Management of Uncertainty in Knowledge-Based Systems, 18th International Conference, IPMU 2020_, pages 680-692.
-
-<a id="3">[[3]](https://link.springer.com/chapter/10.1007/978-981-15-1699-3_8)</a>
+<a id="2">[[2]](https://link.springer.com/chapter/10.1007/978-981-15-1699-3_8)</a>
 Tatusch, M., Klassen, G., Bravidor, M., and Conrad, S. 
 **Show me your friends and i’ll tell you who you are. Finding anomalous time series by conspicuous clus-
 ter transitions**.  
 In: _Data Mining. AusDM 2019. Communications in Computer and Information Science_, pages 91–103.
 
-<a id="4">[[4]](https://link.springer.com/chapter/10.1007/978-3-030-59065-9_26)</a>
+<a id="3">[[3]](https://link.springer.com/chapter/10.1007/978-3-030-59065-9_26)</a>
 Tatusch, M., Klassen, G., and Conrad, S.  
 **Behave or be detected! Identifying outlier sequences by their group cohesion**.  
 In: _Big Data Analytics and KnowledgeDiscovery, 22nd International Conference, DaWaK 2020_, pages 333–347.
 
-<a id="5">[[5]](https://link.springer.com/chapter/10.1007%2F978-3-030-65390-3_28)</a>
+<a id="4">[[4]](https://link.springer.com/chapter/10.1007%2F978-3-030-65390-3_28)</a>
 Tatusch, M., Klassen, G., and Conrad, S.
 **Loners stand out. Identification of anomalous subsequences based on group performance**.  
 In: _Advanced Data Mining and Applications, ADMA 2020_, pages 360–369.
 
-<a id="6">[[6]](https://ieeexplore.ieee.org/document/9308516) 
+<a id="5">[[5]](https://ieeexplore.ieee.org/document/9308516) 
 Klassen, G., Tatusch, M., and Conrad, S.   
 **Clustering of time series regarding their over-time stability**.  
 In: _Proceedings of the 2020 IEEE Symposium Series on Computational Intelligence (SSCI)_, pages 1051–1058.
 
-<a id="7">[[7]](https://doi.org/10.1007/s10489-022-04231-7) 
-Klassen, G., Tatusch, M., and Conrad, S.  
-**Cluster-Based Stability Evaluation in Time Series Data Sets**.  
-In: Applied Intelligence 53.13 (2023): 16606-16629.
-
-<a id="8">[[8]](https://doi.org/10.3390/engproc2022018003) 
+<a id="6">[[6]](https://doi.org/10.3390/engproc2022018003) 
 Korlakov, S., Klassen, G., Bravidor, M., Conrad, S.:
 **Alone We Can Do So Little; Together We Cannot Be Detected**.
 In: Engineering Proceedings 18.1, 8th International conference on Time Series and Forecasting, ITISE 2022.
 
-<a id="9">[[9]](https://doi.org/10.3390/engproc2024068048) 
+<a id="7">[[7]](https://doi.org/10.3390/engproc2024068048) 
 Korlakov, S., Klassen, G., Bauer, L., Conrad, S.:
 **Multi-Objective Optimisation for the Selection of Clusterings across Time**.
 In: Engineering Proceedings 68.1, 10th International conference on Time Series and Forecasting, ITISE 2024.
