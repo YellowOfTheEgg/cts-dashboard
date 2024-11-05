@@ -14,6 +14,8 @@ class JaccardScore(ITemporalQualityMetric):
         self.col_features = data_definition["features"]
 
     def _calculate_jaccard(self, prev_clustering, current_clustering):
+        prev_clustering.sort(order=["cluster_id"])
+        current_clustering.sort(order=["cluster_id"])
         prev_object_id_groups = [
             set(map(lambda row: row["object_id"], v))
             for k, v in itertools.groupby(
@@ -42,8 +44,13 @@ class JaccardScore(ITemporalQualityMetric):
 
     def calculate_score(self, prev_tpc_properties, current_tpc):
         if prev_tpc_properties is not None:
+            prev_clustering = prev_tpc_properties.groups.copy()
+            curr_clustering = current_tpc["groups"].copy()
+            prev_clustering_unique_noise_ids = self.increment_noise_ids(prev_clustering)
+            curr_clustering_unique_noise_ids = self.increment_noise_ids(curr_clustering)
+            
             score = self._calculate_jaccard(
-                prev_tpc_properties.groups, current_tpc["groups"]
+               prev_clustering_unique_noise_ids, curr_clustering_unique_noise_ids
             )
         else:
             score = 0
