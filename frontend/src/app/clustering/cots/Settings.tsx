@@ -66,7 +66,7 @@ export const Settings = () => {
 
     const settings_cots = { min_cf: minCf, sw: sw };
     gatewayApi
-      .post(settingsCotsEndpoint, settings_cots)
+      .post(settingsCotsEndpoint, settings_cots,{ withCredentials: true })
       .then((outerResponse) => {
         setSettingsRequestResult({
           requestDone: true,

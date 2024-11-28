@@ -128,7 +128,7 @@ export const FileUpload = () => {
     };
 
     gatewayApi
-      .post(fileSettingsEndpoint, settingsDataset)
+      .post(fileSettingsEndpoint, settingsDataset, { withCredentials: true })
       .then((outerResponse) => {
         // set this variable for the user to see the result of the request
         setShowResultCard(false);
@@ -145,7 +145,7 @@ export const FileUpload = () => {
         formData.append("file", acceptedFile as Blob);
 
         gatewayApi
-          .post(fileUploadEndpoint, formData, { headers: headers })
+          .post(fileUploadEndpoint, formData, { headers: headers, withCredentials: true })
           .then((innerResponse) => {
             // set this variable for the user to see the result of the request
             setDatasetRequestResult({

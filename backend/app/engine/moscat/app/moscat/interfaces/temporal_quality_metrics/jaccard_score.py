@@ -48,9 +48,9 @@ class JaccardScore(ITemporalQualityMetric):
             curr_clustering = current_tpc["groups"].copy()
             prev_clustering_unique_noise_ids = self.increment_noise_ids(prev_clustering)
             curr_clustering_unique_noise_ids = self.increment_noise_ids(curr_clustering)
-            
+
             score = self._calculate_jaccard(
-               prev_clustering_unique_noise_ids, curr_clustering_unique_noise_ids
+                prev_clustering_unique_noise_ids, curr_clustering_unique_noise_ids
             )
         else:
             score = 0

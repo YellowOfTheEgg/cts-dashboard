@@ -62,7 +62,7 @@ export const Result = () => {
   const { showClustering } = useContext(CotsResultContext);
 
   useEffect(() => {
-    gatewayApi.get(resultEndpoint).then((response) => {
+    gatewayApi.get(resultEndpoint,{ withCredentials: true }).then((response) => {
       setClusterings(response.data["data"]["clusterings"]);
       setObjectLables(response.data["data"]["object_labels"]);
       setClusterLabels(response.data["data"]["cluster_labels"]);
@@ -87,7 +87,7 @@ export const Result = () => {
   };
 
   const onDownloadResult = () => {
-    gatewayApi.get(resultCsvEndpoint).then((response) => {
+    gatewayApi.get(resultCsvEndpoint,{ withCredentials: true }).then((response) => {
       downloader(response, "cots_clustering_result.csv");
     });
   };

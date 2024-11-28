@@ -29,7 +29,7 @@ export const Settings = () => {
   );
 
   useEffect(() => {
-    gatewayApi.get(settingsDatasetEndpoint).then((response) => {
+    gatewayApi.get(settingsDatasetEndpoint,{ withCredentials: true }).then((response) => {
       setFeatureNames(response.data["data"]["features"]);
       setNewSelectedFeatures(response.data["data"]["features"].map(() => true));
     });
