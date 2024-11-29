@@ -72,18 +72,20 @@ export const RunEvaluation = () => {
     setAlertOpen(false);
     setProgressType(1);
     setRequestNumber(requestNumber + 1);
-    gatewayApi.post(runEndpoint).then((response) => {
-      setRunRequestResult({
-        requestDone: true,
-        success: response.data["success"],
-        message: response.data["message"],
+    gatewayApi
+      .post(runEndpoint, null, { withCredentials: true })
+      .then((response) => {
+        setRunRequestResult({
+          requestDone: true,
+          success: response.data["success"],
+          message: response.data["message"],
+        });
+        setAlertOpen(true);
+        setProgressType(2);
+        if (response.data["success"] === true) {
+          setShowResultCard(true);
+        }
       });
-      setAlertOpen(true);
-      setProgressType(2);
-      if (response.data["success"] === true) {
-        setShowResultCard(true);
-      }
-    });
   };
 
   return (

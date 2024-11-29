@@ -137,7 +137,7 @@ export const MoscatSettings = () => {
     };
 
     gatewayApi
-      .post(moscatSettingsEndpoint, moscatSettings)
+      .post(moscatSettingsEndpoint, moscatSettings, { withCredentials: true })
       .then((response) => {
         setSettingsRequestResult({
           requestDone: true,

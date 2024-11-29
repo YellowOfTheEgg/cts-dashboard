@@ -14,9 +14,11 @@ export const Result = () => {
   const resultRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    gatewayApi.get(resultEndpoint).then((response) => {
-      setEvalResult(response.data["data"]);
-    });
+    gatewayApi
+      .get(resultEndpoint, { withCredentials: true })
+      .then((response) => {
+        setEvalResult(response.data["data"]);
+      });
     if (resultRef.current) {
       resultRef.current.scrollIntoView();
     }

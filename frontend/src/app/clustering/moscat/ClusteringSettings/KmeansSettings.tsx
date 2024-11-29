@@ -73,7 +73,7 @@ export const KmeansSettings = () => {
       max_iter: maxIterations,
     };
     gatewayApi
-      .post(kmeansSettingsEndpoint, kmeansSettings)
+      .post(kmeansSettingsEndpoint, kmeansSettings, { withCredentials: true })
       .then((response) => {
         setSettingsRequestResult({
           requestDone: true,

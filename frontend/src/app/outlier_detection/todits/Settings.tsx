@@ -51,7 +51,7 @@ export const Settings = () => {
       sigma: sigmaValue,
     };
     gatewayApi
-      .post(settingsToditsEndpoint, settings_todits)
+      .post(settingsToditsEndpoint, settings_todits, { withCredentials: true })
       .then((outerResponse) => {
         setSettingsRequestResult({
           requestDone: true,

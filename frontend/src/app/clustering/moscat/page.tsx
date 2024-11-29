@@ -17,7 +17,7 @@ const resetEndpoint = "clustering/moscat/reset";
 
 export default function Page() {
   useEffect(() => {
-    gatewayApi.post(resetEndpoint);
+    gatewayApi.post(resetEndpoint, null, { withCredentials: true });
   }, []);
 
   return (

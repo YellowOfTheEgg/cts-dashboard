@@ -42,12 +42,24 @@ class JaccardScore(ITemporalQualityMetric):
         transition_score = round(transition_score, 2)
         return transition_score
 
+    def _increment_noise_ids(self, clustering):
+        # if cluster_id is -1 then give it a unique negative cluster_id otherwise keep it as it is
+        clustering["cluster_id"] = [
+            -1 * (i + 1) if cluster_id == -1 else cluster_id
+            for i, cluster_id in enumerate(clustering["cluster_id"])
+        ]
+        return clustering
+
     def calculate_score(self, prev_tpc_properties, current_tpc):
         if prev_tpc_properties is not None:
             prev_clustering = prev_tpc_properties.groups.copy()
             curr_clustering = current_tpc["groups"].copy()
-            prev_clustering_unique_noise_ids = self.increment_noise_ids(prev_clustering)
-            curr_clustering_unique_noise_ids = self.increment_noise_ids(curr_clustering)
+            prev_clustering_unique_noise_ids = self._increment_noise_ids(
+                prev_clustering
+            )
+            curr_clustering_unique_noise_ids = self._increment_noise_ids(
+                curr_clustering
+            )
 
             score = self._calculate_jaccard(
                 prev_clustering_unique_noise_ids, curr_clustering_unique_noise_ids

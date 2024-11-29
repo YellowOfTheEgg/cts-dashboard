@@ -84,7 +84,7 @@ export const Settings = () => {
       exploitation_term: exploitationTerm,
     };
     gatewayApi
-      .post(closeSettingsEndpoint, closeSettings)
+      .post(closeSettingsEndpoint, closeSettings, { withCredentials: true })
       .then((response) => {
         setSettingsRequestResult({
           requestDone: true,

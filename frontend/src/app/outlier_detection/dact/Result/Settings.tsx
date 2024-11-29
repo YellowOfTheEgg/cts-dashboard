@@ -1,4 +1,4 @@
-import React, { useEffect,useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Button,
   Checkbox,
@@ -36,7 +36,7 @@ export const Settings = () => {
 
   useEffect(() => {
     gatewayApi
-      .get(settingsDatasetEndpoint)
+      .get(settingsDatasetEndpoint, { withCredentials: true })
       .then((response) => {
         if (response.data["success"] === true) {
           setFeatureNames(response.data["data"]["features"]);

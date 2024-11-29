@@ -29,14 +29,16 @@ export const Settings = () => {
   );
 
   useEffect(() => {
-    gatewayApi.get(settingsDatasetEndpoint).then((response) => {
-      if (response.data["success"] === true) {
-        setFeatureNames(response.data["data"]["features"]);
-        setNewSelectedFeatures(
-          response.data["data"]["features"].map(() => true)
-        );
-      }
-    });
+    gatewayApi
+      .get(settingsDatasetEndpoint, { withCredentials: true })
+      .then((response) => {
+        if (response.data["success"] === true) {
+          setFeatureNames(response.data["data"]["features"]);
+          setNewSelectedFeatures(
+            response.data["data"]["features"].map(() => true)
+          );
+        }
+      });
   }, []);
 
   const onFeatureSelection = (

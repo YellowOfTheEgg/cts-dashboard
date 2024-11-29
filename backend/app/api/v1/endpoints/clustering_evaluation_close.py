@@ -1,28 +1,22 @@
 from typing import Annotated
 from fastapi import APIRouter
-
 from fastapi import File
-
-
 from app.models.settings_clustered_dataset import SettingsClusteredDataset
-
 from app.models.settings_close import SettingsClose
-
-
 from fastapi import Request
+from app.crud import store_data, retrieve_data, delete_data
 
 router = APIRouter()
 
 
 @router.post("/dataset")
 def set_dataset(file: Annotated[bytes, File()], request: Request):
-    import pandas as pd
     from io import BytesIO
 
     state = request.app.state.close
-    # state.dataset_df=pd.read_csv(BytesIO(file),encoding='utf-8')
-    state.dataset = BytesIO(file)
-    fsize = state.dataset.getbuffer().nbytes
+    session = request.cookies.get("session")
+    dataset = BytesIO(file)
+    fsize = dataset.getbuffer().nbytes
 
     if fsize == 0:
         return {
@@ -30,26 +24,23 @@ def set_dataset(file: Annotated[bytes, File()], request: Request):
             "message": "Uploaded file does not contain a dataset.",
         }
     else:
+        store_data(session, state, "dataset", dataset)
         return {"success": True, "message": "Dataset uploaded."}
 
 
 @router.post("/settings-dataset")
 def set_settings_dataset(settingsDataset: SettingsClusteredDataset, request: Request):
-
     state = request.app.state.close
-
-    state.settings_dataset = settingsDataset
-    # datasettings check
-
+    session = request.cookies.get("session")
+    store_data(session, state, "settings_dataset", settingsDataset)
     return {"success": True, "message": "Settings for dataset uploaded."}
 
 
 @router.post("/settings-close")
 def set_settings_close(settingsClose: SettingsClose, request: Request):
-
     state = request.app.state.close
-    state.settings_close = settingsClose
-
+    session = request.cookies.get("session")
+    store_data(session, state, "settings_close", settingsClose)
     return {"success": True, "message": "Settings for CLOSE uploaded."}
 
 
@@ -59,22 +50,29 @@ def run(request: Request):
     import pandas as pd
 
     state = request.app.state.close
+    session = request.cookies.get("session")
+    data = retrieve_data(session, state)
+    if not data:
+        return {
+            "success": False,
+            "message": "Required information is missing. Re-upload all information and try again.",
+        }
 
-    if not hasattr(state, "dataset"):
+    if not "dataset" in data:
         return {"success": False, "message": "No dataset uploaded."}
 
-    fsize = state.dataset.getbuffer().nbytes
+    fsize = data["dataset"].getbuffer().nbytes
     if fsize == 0:
         return {
             "success": False,
             "message": "Uploaded file does not contain a dataset.",
         }
-    if not hasattr(state, "settings_dataset"):
+    if not "settings_dataset" in data:
         return {
             "response_type": "error",
             "message": "No settings for dataset uploaded.",
         }
-    if not hasattr(state, "settings_close"):
+    if not "settings_close" in data:
         return {"response_type": "error", "message": "No settings for CLOSE uploaded."}
 
     object_id_column = state.settings_dataset.object_id
@@ -82,9 +80,10 @@ def run(request: Request):
     cluster_id_column = state.settings_dataset.cluster_id
     feature_columns = state.settings_dataset.features
     delimiter = state.settings_dataset.column_separator
+    dataset = data["dataset"]
+    dataset.seek(0)
 
-    state.dataset.seek(0)
-    dataset_df = pd.read_csv(state.dataset, encoding="utf-8", delimiter=delimiter)
+    dataset_df = pd.read_csv(dataset, encoding="utf-8", delimiter=delimiter)
     dataset_df_col_names = list(dataset_df.columns.values)
 
     if object_id_column not in dataset_df_col_names:
@@ -97,7 +96,8 @@ def run(request: Request):
         return {"success": False, "message": "Feature column(s) not found in dataset."}
 
     close = Close(dataset_df, state.settings_dataset, state.settings_close)
-    state.evaluation_result = close.run()
+    close_score = close.run()
+    store_data(session, state, "evaluation_result", close_score)
 
     return {
         "success": True,
@@ -108,7 +108,9 @@ def run(request: Request):
 @router.get("/result")
 def get_result(request: Request):
     state = request.app.state.close
-    if hasattr(state, "evaluation_result"):
+    session = request.cookies.get("session")
+    evaluation_result = retrieve_data(session, state, "evaluation_result")
+    if evaluation_result:
         return {
             "success": True,
             "message": "Result available.",
@@ -124,6 +126,6 @@ def get_result(request: Request):
 
 @router.post("/reset")
 def reset(request: Request):
-    from starlette.datastructures import State
-
-    request.app.state.close = State()
+    session = request.cookies.get("session")
+    delete_data(session, request.app.state.close)
+    return {"success": True, "message": "CLOSE successfully reset."}

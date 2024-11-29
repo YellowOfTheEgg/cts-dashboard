@@ -55,7 +55,9 @@ export const IncKmeansSettings = () => {
       max_iter: maxIterations,
     };
     gatewayApi
-      .post(kmeansSettingsEndpoint, incKmeansSettings)
+      .post(kmeansSettingsEndpoint, incKmeansSettings, {
+        withCredentials: true,
+      })
       .then((response) => {
         setSettingsRequestResult({
           requestDone: true,

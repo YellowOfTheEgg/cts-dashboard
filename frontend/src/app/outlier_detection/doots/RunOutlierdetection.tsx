@@ -10,7 +10,8 @@ import { ProgressBar } from "@/components/ProgressBar";
 const runEndpoint = "/outlier-detection/doots/run";
 
 export const RunClustering = () => {
-  const { setShowResultCard,setShowClustering } = React.useContext(DootsContext);
+  const { setShowResultCard, setShowClustering } =
+    React.useContext(DootsContext);
   const [runRequestResult, setRunRequestResult] = React.useState({
     requestDone: false,
     success: true,
@@ -32,18 +33,20 @@ export const RunClustering = () => {
     setAlertOpen(false);
     setProgressType(1);
     setRequestNumber(requestNumber + 1);
-    gatewayApi.post(runEndpoint).then((response) => {
-      setRunRequestResult({
-        requestDone: true,
-        success: response.data["success"],
-        message: response.data["message"],
+    gatewayApi
+      .post(runEndpoint, null, { withCredentials: true })
+      .then((response) => {
+        setRunRequestResult({
+          requestDone: true,
+          success: response.data["success"],
+          message: response.data["message"],
+        });
+        setAlertOpen(true);
+        setProgressType(2);
+        if (response.data["success"] === true) {
+          setShowResultCard(true);
+        }
       });
-      setAlertOpen(true);
-      setProgressType(2);
-      if (response.data["success"] === true) {
-        setShowResultCard(true);
-      }
-    });
   };
 
   return (

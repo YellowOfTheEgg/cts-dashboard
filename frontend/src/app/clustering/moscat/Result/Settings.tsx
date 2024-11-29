@@ -35,11 +35,13 @@ export const Settings = () => {
 
   useEffect(() => {
     gatewayApi
-      .get(settingsDatasetEndpoint)
+      .get(settingsDatasetEndpoint, { withCredentials: true })
       .then((response) => {
-        setFeatureNames(response.data['data']["features"]);
-        setNewSelectedFeatures(response.data['data']["features"].map(() => true));
-      })      
+        setFeatureNames(response.data["data"]["features"]);
+        setNewSelectedFeatures(
+          response.data["data"]["features"].map(() => true)
+        );
+      });
   }, []);
 
   const onFeatureSelection = (

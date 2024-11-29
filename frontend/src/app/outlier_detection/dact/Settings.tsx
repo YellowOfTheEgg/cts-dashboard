@@ -57,7 +57,7 @@ export const Settings = () => {
       tau: tauValue,
     };
     gatewayApi
-      .post(settingsDactEndpoint, settings_dact)
+      .post(settingsDactEndpoint, settings_dact, { withCredentials: true })
       .then((outerResponse) => {
         setSettingsRequestResult({
           requestDone: true,

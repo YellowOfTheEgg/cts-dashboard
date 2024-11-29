@@ -20,7 +20,7 @@ const resetEndpoint = "outlier-detection/doots/reset";
 
 export default function Page() {
   useEffect(() => {
-    gatewayApi.post(resetEndpoint);
+    gatewayApi.post(resetEndpoint, null, { withCredentials: true });
   }, []);
 
   return (

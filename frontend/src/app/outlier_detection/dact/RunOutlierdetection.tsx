@@ -33,7 +33,7 @@ export const RunOutlierdetection = () => {
     setAlertOpen(false);
     setProgressType(1);
     setRequestNumber(requestNumber + 1);
-    gatewayApi.post(runEndpoint).then((response) => {
+    gatewayApi.post(runEndpoint, null, { withCredentials: true }).then((response) => {
       setRunRequestResult({
         requestDone: true,
         success: response.data["success"],

@@ -108,7 +108,7 @@ export const DbscanSettings = () => {
       eps_max: epsTo,
     };
     gatewayApi
-      .post(dbscanSettingsEndpoint, dbscanSettings)
+      .post(dbscanSettingsEndpoint, dbscanSettings, { withCredentials: true })
       .then((response) => {
         setSettingsRequestResult({
           requestDone: true,

@@ -1,14 +1,11 @@
 from typing import Annotated
 from fastapi import APIRouter
-
 from fastapi import File
-
-
 from app.models.settings_dataset import SettingsDataset
 from app.models.settings_clustering_cots import SettingsCots
 from app.crud import store_data, retrieve_data, delete_data
-
 from fastapi import Request
+
 
 router = APIRouter()
 
@@ -20,7 +17,6 @@ def set_dataset(file: Annotated[bytes, File()], request: Request):
     state = request.app.state.cots
     session = request.cookies.get("session")
     dataset = BytesIO(file)
-
     fsize = dataset.getbuffer().nbytes
 
     if fsize == 0:
@@ -67,7 +63,6 @@ def get_settings_dataset(request: Request):
 
 @router.post("/run")
 def run(request: Request):
-
     import pandas as pd
     from app.engine.wrappers.cots import Cots
 
@@ -75,7 +70,10 @@ def run(request: Request):
     session = request.cookies.get("session")
     data = retrieve_data(session, state)
     if not data:
-        return {"success": False, "message": "Required information is missing."}
+        return {
+            "success": False,
+            "message": "Required information is missing. Re-upload all information and try again.",
+        }
 
     if not "dataset" in data:
         return {"success": False, "message": "No dataset uploaded."}

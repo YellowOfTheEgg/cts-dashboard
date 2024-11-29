@@ -64,16 +64,18 @@ export const Result = () => {
   const { showClustering } = useContext(ToditsContext);
 
   useEffect(() => {
-    gatewayApi.get(resultEndpoint).then((response) => {
-      setClusterings(response.data["data"]["clusterings"]);
-      setObjectLables(response.data["data"]["object_labels"]);
-      setClusterLabels(response.data["data"]["cluster_labels"]);
-      setOutliers(response.data["data"]["outlier_info"]);
-      setTimeLabels(response.data["data"]["time_labels"]);
-      setNumberPages(
-        Math.ceil(response.data["data"]["clusterings"].length / plotsPerPage)
-      );
-    });
+    gatewayApi
+      .get(resultEndpoint, { withCredentials: true })
+      .then((response) => {
+        setClusterings(response.data["data"]["clusterings"]);
+        setObjectLables(response.data["data"]["object_labels"]);
+        setClusterLabels(response.data["data"]["cluster_labels"]);
+        setOutliers(response.data["data"]["outlier_info"]);
+        setTimeLabels(response.data["data"]["time_labels"]);
+        setNumberPages(
+          Math.ceil(response.data["data"]["clusterings"].length / plotsPerPage)
+        );
+      });
 
     if (resultRef.current) {
       resultRef.current.scrollIntoView();
@@ -92,10 +94,10 @@ export const Result = () => {
 
   const onDownloadResult = () => {
     gatewayApi
-      .get(resultCsvEndpoint)
+      .get(resultCsvEndpoint, { withCredentials: true })
       .then((response) => {
         downloader(response, "todits_outlier_detection_result.csv");
-      })    
+      });
   };
 
   return (

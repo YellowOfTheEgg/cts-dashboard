@@ -66,7 +66,7 @@ export const Settings = () => {
       tau: tauValue,
     };
     gatewayApi
-      .post(settingsDootsEndpoint, settings_doots)
+      .post(settingsDootsEndpoint, settings_doots, { withCredentials: true })
       .then((outerResponse) => {
         setSettingsRequestResult({
           requestDone: true,
