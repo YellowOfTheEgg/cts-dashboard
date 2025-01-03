@@ -75,11 +75,13 @@ def run(request: Request):
     if not "settings_close" in data:
         return {"response_type": "error", "message": "No settings for CLOSE uploaded."}
 
-    object_id_column = state.settings_dataset.object_id
-    time_column = state.settings_dataset.time
-    cluster_id_column = state.settings_dataset.cluster_id
-    feature_columns = state.settings_dataset.features
-    delimiter = state.settings_dataset.column_separator
+    settings_dataset = data["settings_dataset"]
+    settings_close= data["settings_close"]
+    object_id_column = settings_dataset.object_id
+    time_column = settings_dataset.time
+    cluster_id_column = settings_dataset.cluster_id
+    feature_columns = settings_dataset.features
+    delimiter = settings_dataset.column_separator
     dataset = data["dataset"]
     dataset.seek(0)
 
@@ -95,7 +97,7 @@ def run(request: Request):
     if len(set(feature_columns) - set(dataset_df_col_names)) > 0:
         return {"success": False, "message": "Feature column(s) not found in dataset."}
 
-    close = Close(dataset_df, state.settings_dataset, state.settings_close)
+    close = Close(dataset_df, settings_dataset, settings_close)
     close_score = close.run()
     store_data(session, state, "evaluation_result", close_score)
 
